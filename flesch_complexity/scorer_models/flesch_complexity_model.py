@@ -30,3 +30,18 @@ class FleschComplexityModel(ScorerModel):
     def from_config(cls, config, name, section_key='scorer_models'):
         section = config[section_key][name]
         return cls(**{k: v for k, v in section.items() if k != "class"})
+
+    def info(self):
+        return {
+            'type': "FleschScorer",
+            'version': self.version,
+            'behavior': "Returns the flesch readability score."
+        }
+
+    def format_info(self, format="str"):
+        if format == 'str':
+            return str(self.info())
+        elif format == 'json':
+            return self.info()
+        else:
+            raise TypeError("Format {0} not supported".format(format))
