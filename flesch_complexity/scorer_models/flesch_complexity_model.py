@@ -3,6 +3,7 @@ import pickle
 from revscoring import ScorerModel
 from revscoring.features import wikitext
 
+
 class FleschComplexityModel(ScorerModel):
     """
     Implementation of the Flesch reading ease model
@@ -24,3 +25,8 @@ class FleschComplexityModel(ScorerModel):
             A `dict` of statistics
         """
         return feature_values[0]
+
+    @classmethod
+    def from_config(cls, config, name, section_key='scorer_models'):
+        section = config[section_key][name]
+        return cls(**{k: v for k, v in section.items() if k != "class"})
